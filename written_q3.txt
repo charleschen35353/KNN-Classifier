@@ -1,0 +1,44 @@
+In k-nearest neighbors, the classification is achieved by majority vote in the vicinity of data. Sup-
+pose our training data comprises n data points with two classes, each comprising exactly half of 
+the training data, with some overlap between the two classes.
+
+------------------------------------------------------------------------------------------------------------------
+(a) Describe what happens to the average 0-1 prediction error on the training data when the
+neighbor count k varies from n to 1. (In this case, the prediction for training data point xi
+includes (xi, yi) as part of the example training data used by kNN.)
+
+Ans: When K=n, still we are ignoring the vicinity of the mapped space. Every input will have the same prediction, 
+i.e. we are just guessing. So we get large error rate of course.
+
+When K =1, since a data point X' to be predicted is contained in the training dataset, we will get 100% accuracy 
+because we have the exact data point in training data.
+
+From K=n to 1, the error rate will  decrease to 0.
+------------------------------------------------------------------------------------------------------------------
+(b) We randomly choose half of the data to be removed from the training data, train on the re-
+maining half, and test on the held-out half. Predict and explain with a sketch how the average
+0-1 prediction error on the held-out validation set might change when k varies? Explain your
+reasoning.
+
+Ans: Let's assume the data to be predicted to be X' with ground truth label Y', and X' is not any data point in the training set.
+
+When K=n, KNN will predict X' with the entire dataset. This method will simply ignore the vicinity of D dimensional space X' is mapped to.
+Any X' will have same predicted label. This will cause under fitting leading to large error rate, i.e. high bias and low variance.
+
+When K=1, the prediction of X' will only depend on the closest data point in the training data. 
+This will cause overfitting since the decision boundary can be sharp, e.g. low bias but high variance. 
+This normally will lead to high error rate, too.
+
+To reach the lowest error rate, we search K from n to 1. Considering the bias-variance tradeoff, we will reach a value K= k* that we have the lowest error rate. 
+K values > k* will tend to underfit, where K values < k*  will tend to overfit.
+
+------------------------------------------------------------------------------------------------------------------
+(c) In kNN, once k is determined, all of the k-nearest neighbors are weighted equally in deciding
+the class label. This may be inappropriate when k is large. Suggest a modification to the
+algorithm that avoids this caveat.
+
+Ans: If K is large, the distance will be ignored among k nearest neighbors as we only care about the number of votes for each label. This will lead to information loss because we sample all distance to boolean values.
+
+To improve this, we can leverage linear interpolation, i.e. assign a weighted vote using distance. By this approach, we are still maintaining the distance info during our prediction.
+
+------------------------------------------------------------------------------------------------------------------
